@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Calificar al Mesero</h2>
+    <form (ngSubmit)="enviarCalificacion()">
+      <div class="form-group">
+        <label for="waiterName">Nombre del Mesero</label>
+        <input type="text" id="waiterName" [(ngModel)]="waiterName" name="waiterName" required>
+      </div>
+      <div class="form-group">
+        <label for="rating">Calificación</label>
+        <input type="number" id="rating" [(ngModel)]="rating" name="rating" required>
+      </div>
+      <div class="form-group">
+        <label for="comment">Comentario</label>
+        <textarea id="comment" [(ngModel)]="comment" name="comment"></textarea>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  

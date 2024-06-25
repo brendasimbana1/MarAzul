@@ -1,0 +1,9 @@
+<div class="container">
+    <h2>Menú</h2>
+    <div *ngFor="let plato of menu">
+        <h3>{{ plato.nombre }}</h3>
+        <p>{{ plato.descripcion }}</p>
+        <p>Precio: {{ plato.precio }}</p>
+        <button (click)="agregarAlPedido(plato)">Agregar al Pedido</button>
+    </div>
+</div>
