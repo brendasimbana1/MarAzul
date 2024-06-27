@@ -4,3 +4,15 @@
     font-weight: 100;
     font-style: normal;
   }
+
+.containera {
+    display: flex;
+    align-items: center; 
+    gap: 30px; 
+}
+
+
+.containera img {
+    width: 100px;
+    height: auto;
+}
