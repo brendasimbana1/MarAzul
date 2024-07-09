@@ -24,7 +24,7 @@ db.once('open', function () {
 });
 
 // Endpoint para obtener la lista de platos disponibles en el menú
-app.get('/api/menu', async (req, res) => {
+app.get('/api/platos', async (req, res) => {
   try {
     const menuItems = await MenuItem.find();
     res.json(menuItems);
@@ -34,7 +34,7 @@ app.get('/api/menu', async (req, res) => {
 });
 
 // Endpoint para enviar el pedido del cliente
-app.post('/api/pedido', async (req, res) => {
+app.post('/api/pedidos', async (req, res) => {
   // Aquí implementarías la lógica para procesar el pedido
   // Por ejemplo, guardar los detalles del pedido en la base de datos
   // y enviar una confirmación al cliente
@@ -42,7 +42,7 @@ app.post('/api/pedido', async (req, res) => {
 });
 
 // Endpoint para enviar la calificación del mesero
-app.post('/api/calificacion', async (req, res) => {
+app.post('/api/calificaciones', async (req, res) => {
   try {
     const { waiterName, rating, comment } = req.body;
     const newRating = new WaiterRating({

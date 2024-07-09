@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Crear Pedido</h2>
+  <form [formGroup]="pedidosForm" (ngSubmit)="createPedido()">
+    <div class="input-field">
+      <select formControlName="menuItem">
+        <option value="" disabled selected>Elige un plato</option>
+        <option *ngFor="let item of menuItems" [value]="item._id">{{ item.name }}</option>
+      </select>
+      <label>Plato</label>
+    </div>    
+    <div class="input-field">
+      <input formControlName="cliente" type="text" id="cliente">
+      <label for="cliente">Cliente</label>
+    </div>
+    <div class="input-field">
+      <input formControlName="cantidad" type="number" id="cantidad">
+      <label for="cantidad">Cantidad</label>
+    </div>
+    <button class="btn waves-effect waves-light" type="submit" [disabled]="!pedidosForm.valid">Crear Pedido</button>
+    
+  </form>
+</div>

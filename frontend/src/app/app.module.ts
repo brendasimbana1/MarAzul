@@ -5,12 +5,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLinkActive } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { CalificacionComponent } from './componentes/calificacion/calificacion.component';
-import { MenuComponent } from './componentes/menu/menu.component';
-import { HomeComponent } from './componentes/home/home.component';
-import { BarraComponent } from './componentes/barra/barra.component';
-
+import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
+import { CalificacionComponent } from './components/calificacion/calificacion.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { HomeComponent } from './components/home/home.component';
+import { BarraComponent } from './components/barra/barra.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistroComponent } from './components/registro/registro.component';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './auth.guard';
+import { PedidoComponent } from './components/pedido/pedido.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,10 @@ import { BarraComponent } from './componentes/barra/barra.component';
     MenuComponent,
     CalificacionComponent,
     HomeComponent,
-    BarraComponent
+    BarraComponent,
+    LoginComponent,
+    RegistroComponent,
+    PedidoComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,8 +36,13 @@ import { BarraComponent } from './componentes/barra/barra.component';
     HttpClientModule
   ],
   providers: [
-    provideClientHydration(),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
