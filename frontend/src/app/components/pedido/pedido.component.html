@@ -18,14 +18,14 @@
           <td>{{ item.value.precio }}</td>
           <td>
             <div class="form-group">
-              <input type="number" class="form-control" formControlName="cantidad" min="0" required>
+              <input type="number" class="form-control" formControlName="cantidad" min="0" max="30" required>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <button type="submit" class="waves-effect waves-light btn blue" style="margin-bottom: 5%; margin-top: 5%;">
+    <button type="submit" class="waves-effect waves-light btn blue" style="margin-bottom: 5%; margin-top: 5%;" [disabled]="orderForm.invalid">
       Enviar Pedido
       <i class="material-icons right">send</i>
     </button>

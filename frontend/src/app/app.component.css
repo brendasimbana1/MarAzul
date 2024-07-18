@@ -16,3 +16,7 @@
     width: 100px;
     height: auto;
 }
+
+ .container{
+    min-height: 17vh;
+ }

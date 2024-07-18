@@ -3,14 +3,16 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div class="container">
-  <h2>Menú</h2>
+  <div style="text-align: center;">
+    <h2>Menú</h2>
+    <h4>Platos Fuertes</h4>
+  </div>
     <div class="col s12">
       <div *ngIf="menu && menu.length > 0">
         <div *ngFor="let item of menu">
-          <div class="card">
+          <div class="card" style="width: 60%; margin: auto; margin-top: 5%;">
             <div class="card-image">
               <img src="{{item.path}}">
-              <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
             </div>
             <div class="card-content">
               <span style="font-size: 200%; font-family: Verdana, Geneva, Tahoma, sans-serif;" class="card-title">{{item.name}}</span>
