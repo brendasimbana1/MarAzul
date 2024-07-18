@@ -34,4 +34,11 @@ export class TasksService {
   getPedido(id: string): Observable<any> {
     return this.http.get<any>(`${this.URL+'/api/pedidos'}/${id}`);
   }
+  placeOrder(order: any): Observable<any> {
+    console.log('ordens:'+ order);
+    return this.http.post(`${this.URL}/api/pedidos`, order);
+  }
+  getUserName(): Observable<{ name: string }> {
+    return this.http.get<any>(`${this.URL}/api/name`);
+  }
 }

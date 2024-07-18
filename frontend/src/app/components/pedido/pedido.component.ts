@@ -1,90 +1,78 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Platillo } from '../../models/platillo';
 import { TasksService } from '../../services/tasks.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-declare var M: any;
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pedido',
   templateUrl: './pedido.component.html',
   styleUrls: ['./pedido.component.css']
 })
-export class PedidoComponent implements OnInit, AfterViewInit {
-  pedidosForm: FormGroup;
-  pedidos: any[] = [];
-  menuItems: any[] = [];
+export class PedidoComponent implements OnInit {
+  products: Platillo[] = [];
+  orderForm: FormGroup;
 
-  constructor(private tasksService: TasksService, private el: ElementRef, private fb: FormBuilder) {
-    this.pedidosForm = this.fb.group({
-      menuItem: ['', Validators.required],
-      cliente: ['', Validators.required],
-      cantidad: ['', Validators.required]
+  constructor(
+    private ts: TasksService,
+    private fb: FormBuilder,
+  
+  ) {
+    this.orderForm = this.fb.group({
+      items: this.fb.array([])
     });
   }
 
-  ngOnInit(): void {
-    this.loadMenuItems();
-  }
-
-  ngAfterViewInit() {
-    M.AutoInit(); // Inicializa todos los componentes de Materialize en la vista actual
-  }
-
-  loadMenuItems(): void {
-    this.tasksService.getMenu().subscribe((data: any) => {
-      this.menuItems = data;
-      console.log('Menu Items:', this.menuItems);
-      setTimeout(() => {
-        const selectElements = this.el.nativeElement.querySelectorAll('select');
-        M.FormSelect.init(selectElements, {});
-      }, 0); // Inicializa Materialize select después de que la vista se haya actualizado
+  ngOnInit() {
+    this.ts.getMenu().subscribe(data => {
+      this.products = data;
+      console.log(this.products);
+      console.log('aaa');
+      this.initializeForm();
     });
   }
 
-  createPedido(): void {
-    if (this.pedidosForm.valid) {
-      const formData = this.pedidosForm.value;
-      const selectedMenuItem = this.menuItems.find(item => item._id === formData.menuItem);
-  
-      if (selectedMenuItem) {
-        const productos = [
-          {
-            menuItem: selectedMenuItem._id,
-            cantidad: formData.cantidad
-          }
-        ];
-  
-        const newPedido = {
-          cliente: formData.cliente,
-          productos: productos,
-          total: calcularTotal(productos) // Calcula el total aquí según tu lógica
-        };
-  
-        this.tasksService.createPedido(newPedido).subscribe(
-          pedido => {
-            this.pedidos.push(pedido);
-            console.log('Pedido creado:', pedido);
-            // Reiniciar el formulario después de crear el pedido
-            this.pedidosForm.reset();
-            alert(`Valor a Pagar: ${pedido.total.toFixed(2)}`);
+  initializeForm() {
+    this.orderForm.setControl('items', this.fb.array(this.products.map(product => this.createItem(product))));
+  }
+
+  createItem(product: Platillo): FormGroup {
+    return this.fb.group({
+      nombre: [product.name],
+      precio: [product.price],
+      cantidad: [0, [Validators.required, Validators.min(0)]]
+    });
+  }
+
+  get items(): FormArray {
+    return this.orderForm.get('items') as FormArray;
+  }
+
+  onSubmit() {
+    const formValue = this.orderForm.value;
+    const order = {
+      products: formValue.items,
+      total: formValue.items.reduce((acc: number, item: { precio: number; cantidad: number }) => acc + item.precio * item.cantidad, 0)
+    };
+    this.ts.getUserName().subscribe(
+      data => {
+        this.ts.placeOrder(order).subscribe(
+      
+          response => {
+            console.log('Order placed successfully', response);
+            console.log(order.total);
+            alert(`¡El pedido ha sido realizado con éxito!. Nombre: ${data.name}. Valor a Pagar: ${order.total.toFixed(2)}`);
+            this.initializeForm();
           },
           error => {
-            console.error('Error al crear pedido:', error);
-            // Manejo de errores: Mostrar un mensaje al usuario o realizar otra acción apropiada
+            console.error('Error placing order', error);
+            console.log('orden11:'+ order);
           }
         );
-      } else {
-        console.error('Error: Producto no encontrado en menuItems');
+      },
+      error => {
+        console.error('Error al obtener el nombre del usuario', error);
       }
-    }
+    );
+    
   }
-  
-  // Función para calcular el total basado en los productos del pedido 
- 
 }
-function calcularTotal(productos: any[]): number {
-  let total = 0;
-  productos.forEach(producto => {
-    total += producto.cantidad * producto.menuItem.price; // Ajusta según la estructura de tu MenuItem
-  });
-  return total;
-} 

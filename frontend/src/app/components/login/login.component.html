@@ -5,20 +5,20 @@
                 <span class="card-title center-align">Login</span>
               </div>
               <div class="card-content">
-                <form (submit)="signIn()">
+                <form (submit)="signIn()" #login="ngForm">
                     <div class="input-field">
                         <i class="material-icons prefix">account_circle</i>
-                        <input type="text" [(ngModel)]="user.email" name="email" id="email" class="form-control" required autofocus #email="ngModel">
+                        <input type="email" [(ngModel)]="user.email" name="email" id="email" class="form-control validate" required autofocus #email="ngModel">
                         <label for="email">E-mail</label>
                     </div>
                     
                     <div class="input-field">
                         <i class="material-icons prefix">vpn_key</i>
-                        <input type="password" [(ngModel)]="user.password" name="password" id="password" class="form-control" required #passwd="ngModel">
+                        <input type="password" [(ngModel)]="user.password" name="password" id="password" class="form-control validate" required #passwd="ngModel">
                         <label for="password">Password</label>
                     </div>
                     <div>
-                         <button type="submit" class="waves-effect waves-light btn blue" style="width: 100%;">Login</button>
+                         <button type="submit" class="waves-effect waves-light btn blue" style="width: 100%;"  [disabled]="login.invalid">Login</button>
                     </div>
                 </form>
             </div>

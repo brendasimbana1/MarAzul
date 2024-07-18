@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Route, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -15,6 +15,7 @@ export class RegistroComponent {
     email: '', 
     password: ''
   }
+  @ViewChild('reg') reg!: NgForm;
   singUp(){
     this.authService.singUp(this.user)
     .subscribe(

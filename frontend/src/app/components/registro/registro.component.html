@@ -5,26 +5,26 @@
                 <span class="card-title center-align">Registro</span>
               </div>
               <div class="card-content">
-                <form (submit)="singUp()">
+                <form (submit)="singUp()" #reg="ngForm">
                     <div class="input-field">
-                        <input type="text" [(ngModel)]="user.nombre" name="nombre" id="nombre" class="form-control"  required autofocus>
+                        <input type="text" [(ngModel)]="user.nombre" name="nombre" id="nombre" class="form-control validate"  required autofocus #nombre="ngModel">
                         <label for="nombre">Nombre</label>
                     </div>
                     
                     <div class="input-field">
-                        <input type="text" [(ngModel)]="user.cedula" name="cedula" id="cedula" class="form-control" required>
+                        <input type="text" [(ngModel)]="user.cedula" name="cedula" id="cedula" class="form-control validate" required maxlength="10" minlength="10" #cedula="ngModel">
                         <label for="cedula">Cedula</label>
                     </div>
                     <div class="input-field">
-                        <input type="text" [(ngModel)]="user.email" name="email" class="form-control" id="Email" required>
+                        <input type="email" [(ngModel)]="user.email" name="email" class="form-control validate" id="Email" required #email="ngModel">
                         <label for="Email">Email</label>
                     </div>
                     <div class="input-field">
-                        <input type="password" [(ngModel)]="user.password" name="password" class="form-control" id="Password" required>
+                        <input type="password" [(ngModel)]="user.password" name="password" class="form-control validate" id="Password" required #passwd="ngModel">
                         <label for="Password">Password</label>
                     </div>
                     <div>
-                         <button type="submit" class="waves-effect waves-light btn blue" style="width: 100%;">Login</button>
+                         <button type="submit" class="waves-effect waves-light btn blue" style="width: 100%;" [disabled]="reg.invalid">Login</button>
                     </div>
                 </form>
             </div>
