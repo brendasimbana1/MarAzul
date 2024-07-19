@@ -97,6 +97,8 @@ router.get('/api/platos', async (req, res) => {
   }
 });
 
+
+
 // Endpoint para crear un pedido
 
 router.post('/api/pedidos', verifyToken, async (req, res) => {
@@ -138,6 +140,52 @@ router.get('/api/pedidos/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+});
+router.get('/todos', async (req, res) => {
+  try {
+      const pedidos = await Order.find();
+      res.json(pedidos);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
+//actualizar plato
+router.put('/update-plato/:id', async (req, res) => {
+  const { description } = req.body;
+  const { id } = req.params;
+  
+  try {
+    console.log(`Updating plato with id: ${id}`);
+    console.log(`New description: ${description}`);
+
+    const menuItemFind = await MenuItem.findById(id);
+    
+    console.log(menuItemFind);
+    if (!menuItemFind) {
+      console.error(`Plato not found with id: ${id}`);
+      return res.status(404).send("Plato no encontrado");
+    }
+
+    menuItemFind.description = description;
+    await menuItemFind.save();
+
+    res.status(200).send("Descripción actualizada correctamente");
+  } catch (error) {
+    console.error("Error al actualizar la descripción", error);
+    res.status(500).send("Error al actualizar la descripción");
+  }
+});
+
+//eliminar pedido
+router.delete('/api/pedidos/:id', async (req, res) => {
+  try {
+      const pedido = await Order.findByIdAndDelete(req.params.id);
+      if (!pedido) return res.status(404).json({ message: 'Pedido no encontrado' });
+      res.status(200).json({ message: 'Pedido eliminado correctamente' });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
 });
 
 // Endpoint para enviar la calificación del mesero

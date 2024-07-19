@@ -6,7 +6,9 @@ import { CalificacionComponent } from './components/calificacion/calificacion.co
 import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
+import { ActualizacionComponent } from "./components/actualizacion/actualizacion.component";
 import { AuthGuard } from './auth.guard';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
 
 const routes: Routes = [
   { 
@@ -30,7 +32,13 @@ const routes: Routes = [
     path: 'pedido', 
     component: PedidoComponent,
     canActivate: [AuthGuard]
- },
+ },{ 
+  path: 'actualizar', 
+  component: ActualizacionComponent,
+},{ 
+  path: 'pedidos', 
+  component: PedidosComponent,
+},
   {
     path: '',
     redirectTo: 'home',

@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col s12 m4 offset-m3" style="width: 50%;">
+      <div class="card z-depth-4">
+        <div class="card-content blue black-text">
+          <span class="card-title center-align">Actualización</span>
+        </div>
+        <div class="card-content">
+          <form (ngSubmit)="onSubmit()" [formGroup]="updateForm">
+            <div class="input-field">
+              <select formControlName="menuItem" class="browser-default">
+                <option value="" disabled selected>Elige un plato</option>
+                <option *ngFor="let item of menuItems" [value]="item._id">{{ item.name }}</option>
+              </select>
+              <label for="menuItem">Plato</label>
+            </div>
+            <div class="form-group">
+              <label for="description">Nueva Descripción</label>
+              <textarea id="description" formControlName="description" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

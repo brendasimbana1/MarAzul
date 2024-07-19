@@ -26,7 +26,7 @@ export class TasksService {
     return this.http.post<any>(this.URL+'/api/calificaciones', data);
   }
   getPedidos(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL+'/api/pedidos');
+    return this.http.get<any[]>(this.URL+'/todos');
   }
   createPedido(pedido: any): Observable<any> {
     return this.http.post<any>(this.URL+'/api/pedidos', pedido);
@@ -40,5 +40,11 @@ export class TasksService {
   }
   getUserName(): Observable<{ name: string }> {
     return this.http.get<any>(`${this.URL}/api/name`);
+  }
+  updatePlato(id: string, description: string): Observable<any> {
+    return this.http.put(`${this.URL}/update-plato/${id}`, { description });
+  }
+  deletePedido(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.URL}/api/pedidos/${id}`);
   }
 }

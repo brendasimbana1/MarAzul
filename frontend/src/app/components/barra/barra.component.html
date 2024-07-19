@@ -4,8 +4,11 @@
       <div>
         <li><a class="black-text text-darken-2" routerLink="/home">Home</a></li>
         <li><a class="black-text text-darken-2" routerLink="/menu">Ver Menú</a></li>
+        <li><a class="black-text text-darken-2" routerLink="/actualizar">actualizar menu</a></li>
         <li><a class="black-text text-darken-2" routerLink="/calificacion">Calificar Mesero</a></li>
         <li><a class="black-text text-darken-2" routerLink="/pedido">Pedido</a></li>
+        <li><a class="black-text text-darken-2" routerLink="/pedidos"> Borrar Pedido</a></li>
+
           <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" routerLink="/login" routerLinkActive="active">LOGIN</a>

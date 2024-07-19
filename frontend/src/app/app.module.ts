@@ -15,6 +15,8 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './auth.guard';
 import { PedidoComponent } from './components/pedido/pedido.component';
+import { ActualizacionComponent } from './components/actualizacion/actualizacion.component';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { PedidoComponent } from './components/pedido/pedido.component';
     LoginComponent,
     RegistroComponent,
     PedidoComponent,
+    ActualizacionComponent,
+    PedidosComponent,
   ],
   imports: [
     BrowserModule,
